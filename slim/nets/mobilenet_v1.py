@@ -264,6 +264,8 @@ def mobilenet_v1_base(inputs,
           net = slim.conv2d(net, depth(conv_def.depth), conv_def.kernel,
                             stride=conv_def.stride,
                             normalizer_fn=slim.batch_norm,
+                            # [QF modify]
+                            activation_fn=tf.nn.relu,
                             scope=end_point)
           end_points[end_point] = net
           if end_point == final_endpoint:
@@ -280,7 +282,11 @@ def mobilenet_v1_base(inputs,
                                       depth_multiplier=1,
                                       stride=layer_stride,
                                       rate=layer_rate,
-                                      normalizer_fn=slim.batch_norm,
+                                      #[ QF MODIFY]
+                                      normalizer_fn=None,
+                                      biases_initializer=None,
+                                      activation_fn=None,
+                                      # normalizer_fn=slim.batch_norm,
                                       scope=end_point)
 
           end_points[end_point] = net
@@ -291,6 +297,8 @@ def mobilenet_v1_base(inputs,
 
           net = slim.conv2d(net, depth(conv_def.depth), [1, 1],
                             stride=1,
+                            # [ QF modify]
+                            activation_fn=tf.nn.relu,
                             normalizer_fn=slim.batch_norm,
                             scope=end_point)
 
