@@ -45,7 +45,8 @@ V2_DEF = dict(
         # that's why they are here and not in training_scope.
         (slim.batch_norm,): {'center': True, 'scale': True},
         (slim.conv2d, slim.fully_connected, slim.separable_conv2d): {
-            'normalizer_fn': slim.batch_norm, 'activation_fn': tf.nn.relu6
+        # [QF_FIX] relu6 -> relu
+            'normalizer_fn': slim.batch_norm, 'activation_fn': tf.nn.relu
         },
         (ops.expanded_conv,): {
             'expansion_size': expand_input(6),

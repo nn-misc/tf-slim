@@ -237,6 +237,7 @@ def expanded_conv(input_tensor,
         raise TypeError('`use_explicit_padding` should only be used with '
                         '"SAME" padding.')
       padding = 'VALID'
+    # [QF_FIX]
     depthwise_func = functools.partial(
         slim.separable_conv2d,
         num_outputs=None,
@@ -244,7 +245,9 @@ def expanded_conv(input_tensor,
         depth_multiplier=depthwise_channel_multiplier,
         stride=stride,
         rate=rate,
-        normalizer_fn=normalizer_fn,
+        # normalizer_fn=normalizer_fn,
+        biases_initializer=None,
+        normalizer_fn=None,
         padding=padding,
         scope='depthwise')
     # b1 -> b2 * r -> b2
